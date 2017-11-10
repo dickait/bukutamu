@@ -7,9 +7,10 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="<?php echo e(asset('assets/bootstrap/favicon.ico')); ?>">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <link rel="icon" href="<?php echo e(asset('assets/bootstrap/laravel-1.png')); ?>">
 
-    <title>Fixed Top Navbar Example for Bootstrap</title>
+    <title>Larajax</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo e(asset('assets/bootstrap/css/bootstrap.min.css')); ?>" rel="stylesheet">
@@ -160,6 +161,26 @@
                     alert("Nothing data");
                 }
             });
+        }
+
+        function deleteData(id){
+            var popup = confirm("Are you sure for delete this data?");
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            if (popup == true){
+                $.ajax({
+                    url: "<?php echo e(url('contact')); ?>" + '/' + id,
+                    type: "POST",
+                    data: {'_method' : 'DELETE', '_token' : csrf_token },
+                    success: function(){
+                        $('#contact-table').DataTable().ajax.reload();
+                        console.log(data);
+                    },
+                    error: function(){
+                        alert('Something error!');
+                    }
+                });
+            }
+
         }
 
         $(function() {

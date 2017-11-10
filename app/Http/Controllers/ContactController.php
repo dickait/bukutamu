@@ -93,7 +93,7 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Contact::destroy($id);
     }
 
     public function apiContact(){
