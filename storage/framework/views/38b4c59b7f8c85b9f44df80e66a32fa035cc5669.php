@@ -82,8 +82,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4> Contact List
-                            <a onClick="addForm()" class="btn btn-primary pull-right" style="margin-top:-8px;">Add Contact</a> 
-                            <a onClick="eximForm()" class="btn btn-danger pull-right" style="margin-top:-8px;">Import/Export</a>  
+                            <span onClick="addForm()" class="btn btn-primary pull-right" style="margin-top:-8px;">Add Contact</span>
+                            <span onClick="eximForm()" class="btn btn-default pull-right" style="margin-top:-8px;">Import/Export</span>  
                         </h4>
                     </div>
                     <div class="panel-body">

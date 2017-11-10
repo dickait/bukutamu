@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label for="export" class="col-md-3 control-label">Export</label>
                         <div class="col-md-6">
-                            <a href="#" class="btn btn-success">Export</a>
+                            <a href="<?php echo e(route('export.contact')); ?>" class="btn btn-success">Export</a>
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
@@ -74,7 +74,6 @@
                     <button type="submit" class="btn btn-primary btn-save">Submit</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
-
             </form>
         </div>
     </div>

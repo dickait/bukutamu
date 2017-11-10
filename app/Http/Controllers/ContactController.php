@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\Datatables;
-
+use Excel;
 use App\Contact;
 
 class ContactController extends Controller
@@ -105,5 +105,14 @@ class ContactController extends Controller
                         '<a onClick="editForm ('. $contact->id .')" class="btn btn-primary btn-xs"> <i class="glyphicon glyphicon-edit"></i> Edit </a> ' .
                         '<a onClick="deleteData ('. $contact->id .')" class="btn btn-danger btn-xs"> <i class="glyphicon glyphicon-trash"></i> Delete </a>';
             })->make(true);
+    }
+
+    public function exportContact(){
+        $contact = Contact::select('name', 'email')->get();
+        return Excel::create('data_contact', function($excel) use ($contact){
+            $excel->sheet('mysheet', function($sheet) use ($contact){
+                $sheet->fromArray($contact);
+            });
+        })->download('xlsx');
     }
 }
