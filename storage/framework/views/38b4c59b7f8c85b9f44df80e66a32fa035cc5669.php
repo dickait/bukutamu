@@ -82,7 +82,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4> Contact List
-                            <a onClick="addForm()" class="btn btn-primary pull-right" style="margin-top:-8px;">Add Contact</a>
+                            <a onClick="addForm()" class="btn btn-primary pull-right" style="margin-top:-8px;">Add Contact</a> 
+                            <a onClick="eximForm()" class="btn btn-danger pull-right" style="margin-top:-8px;">Import/Export</a>  
                         </h4>
                     </div>
                     <div class="panel-body">
@@ -227,6 +228,11 @@
                 }
             });
         });
+
+        function eximForm(){
+            $('#modal-exim').modal('show');
+            $('#modal-exim form')[0].reset();
+        }
     </script>
   </body>
 </html>
