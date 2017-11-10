@@ -140,6 +140,28 @@
             $('.modal-title').text('Add Contact');
         }
 
+        function editForm(id){
+            save_method = 'edit';
+            $('input[name=_method').val('PATCH');
+            $('#modal-form form')[0].reset();
+            $.ajax({
+                url: "{{ url('contact') }}" + '/' + id + "/edit",
+                type: "GET",
+                dataType: "JSON",
+                success: function(data){
+                    $('#modal-form').modal('show');
+                    $('.modal-title').text('Edit Contact');
+
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#email').val(data.email);
+                },
+                error: function(){
+                    alert("Nothing data");
+                }
+            });
+        }
+
         $(function() {
             $('#modal-form form').validator().on('submit', function (e){
                 if(!e.isDefaultPrevented()){
@@ -153,6 +175,7 @@
                         data: $("#modal-form form").serialize(),
                         success: function($data) {
                             $("#modal-form").modal('hide');
+                            $('#contact-table').DataTable().ajax.reload();
                         },
                         error: function(){
                             alert('Something Error!');
