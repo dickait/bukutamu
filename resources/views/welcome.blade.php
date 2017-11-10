@@ -24,6 +24,8 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/bootstrap/css/navbar-fixed-top.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('assets/sweetalert/sweetalert2.min.css') }}" rel="stylesheet">
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="{{ asset('assets/bootstrap/js/ie-emulation-modes-warning.js') }}"></script>
@@ -119,6 +121,9 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ asset('assets/bootstrap/js/ie10-viewport-bug-workaround.js') }}"></script>
+
+    {{--  sweetalert  --}}
+    <script src="{{ asset('assets/sweetalert/sweetalert2.min.js') }}"></script>
     
     <script type="text/javascript">
         $('#contact-table').DataTable({
@@ -164,23 +169,39 @@
         }
 
         function deleteData(id){
-            var popup = confirm("Are you sure for delete this data?");
             var csrf_token = $('meta[name="csrf-token"]').attr('content');
-            if (popup == true){
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function () {
                 $.ajax({
                     url: "{{ url('contact') }}" + '/' + id,
                     type: "POST",
                     data: {'_method' : 'DELETE', '_token' : csrf_token },
                     success: function(){
                         $('#contact-table').DataTable().ajax.reload();
-                        console.log(data);
+                        swal({
+                            title: 'Success!',
+                            text: 'Data has been deleted',
+                            type: 'success',
+                            timer: '2000'
+                        })
                     },
                     error: function(){
-                        alert('Something error!');
+                        swal({
+                            title: 'Error!',
+                            text: 'Something error!',
+                            type: 'error',
+                            timer: '2000'
+                        })
                     }
                 });
-            }
-
+            });
         }
 
         $(function() {
