@@ -115,4 +115,21 @@ class ContactController extends Controller
             });
         })->download('xlsx');
     }
+
+    public function importContact(Request $request){
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->getRealPath();
+            $data = Excel::load($path, function($reader){})->get();
+            if (!empty($data) && $data->count()) {
+                foreach ($data as $key => $value) {
+                    $contact = new Contact();
+                    $contact->name = $value->name;
+                    $contact->email = $value->email;
+                    $contact->save();
+                }
+            }
+        }
+        
+        return back();
+    }
 }
