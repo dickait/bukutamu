@@ -152,7 +152,7 @@
                         type: "POST",
                         data: $("#modal-form form").serialize(),
                         success: function($data) {
-                            $("#modal-form form").modal('hide');
+                            $("#modal-form").modal('hide');
                         },
                         error: function(){
                             alert('Something Error!');
