@@ -78,21 +78,22 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
+            <div class="col-md-12 col-xs-12">
+                <div class="panel panel-default ">
                     <div class="panel-heading">
                         <h4> Contact List
                             <span onClick="addForm()" class="btn btn-primary pull-right" style="margin-top:-8px;">Add Contact</span>
                             <span onClick="eximForm()" class="btn btn-default pull-right" style="margin-top:-8px;">Import/Export</span>  
                         </h4>
                     </div>
-                    <div class="panel-body">
-                        <table class="table table-striped" id="contact-table">
+                    <div class="panel-body ">
+                        <table class="table table-striped col-xs-12" id="contact-table">
                             <thead>
                                 <tr>
                                     <th width="30">No</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Photo</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -135,6 +136,7 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'email', name: 'email'},
+                {data: 'show_photo', name: 'show_photo'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
@@ -215,13 +217,18 @@
                     $.ajax({
                         url: url,
                         type: "POST",
-                        data: $("#modal-form form").serialize(),
-                        success: function($data) {
+                        // data: $("#modal-form form").serialize(),
+                        data: new FormData($("#modal-form form")[0]),
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
                             $("#modal-form").modal('hide');
                             $('#contact-table').DataTable().ajax.reload();
+                            
                         },
                         error: function(){
                             alert('Something Error!');
+                            
                         }
                     });
                     return false;
