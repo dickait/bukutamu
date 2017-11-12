@@ -215,7 +215,10 @@
                     $.ajax({
                         url: url,
                         type: "POST",
-                        data: $("#modal-form form").serialize(),
+                        // data: $("#modal-form form").serialize(),
+                        data: new FormData($("#modal-form form")[0]),
+                        contentType: false,
+                        processData: false,
                         success: function($data) {
                             $("#modal-form").modal('hide');
                             $('#contact-table').DataTable().ajax.reload();
