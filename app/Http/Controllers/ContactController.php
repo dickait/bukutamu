@@ -40,9 +40,10 @@ class ContactController extends Controller
     {
         $input = $request->all();
         $input['photo'] = null;
+        $current = time();
 
         if ($request->hasFile('photo')){
-            $input['photo'] = '/upload/photo'.str_slug($input['name'], '-').'.'.$request->photo->getClientOriginalExtension();
+            $input['photo'] = '/upload/photo/'.str_slug($input['name'], '-').'-'.$current.'.'.$request->photo->getClientOriginalExtension();
             $request->photo->move(public_path('/upload/photo'), $input['photo']);
         }
 
@@ -87,12 +88,13 @@ class ContactController extends Controller
     {
         $input = $request->all();
         $contact = Contact::findOrFail($id);
+        $current = time();
         
         if ($request->hasFile('photo')){
             if (!$contact->photo == null) {
                 unlink(public_path($contact->photo));
             }
-            $input['photo'] = '/upload/photo/'.str_slug($input['name'], '-').'.'.$request->photo->getClientOriginalExtension();
+            $input['photo'] = '/upload/photo/'.str_slug($input['name'], '-').'-'.$current.'.'.$request->photo->getClientOriginalExtension();
             $request->photo->move(public_path('/upload/photo'), $input['photo']);
         }
 
@@ -139,7 +141,8 @@ class ContactController extends Controller
                         '<a onClick="editForm ('. $contact->id .')" class="btn btn-primary btn-xs"> <i class="glyphicon glyphicon-edit"></i> Edit </a> ' .
                         '<a onClick="deleteData ('. $contact->id .')" class="btn btn-danger btn-xs"> <i class="glyphicon glyphicon-trash"></i> Delete </a>';
             })
-            ->rawColumns(['show_photo', 'action'])->make(true);
+            ->rawColumns(['show_photo', 'action'])
+            ->make(true);
     }
 
     public function exportContact(){
