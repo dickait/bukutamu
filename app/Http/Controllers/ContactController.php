@@ -17,7 +17,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view ('welcome');
+
+        return view ('data');
+        //  $provinsi = Indonesia::allProvinces();
+        // return view('data')->with('provinsi', $provinsi);
     }
 
     /**
@@ -137,10 +140,28 @@ class ContactController extends Controller
                 return '<img class="rounded-square" width="50" height="50" src="'. url($contact->photo) .'" alt="">';
             })
             ->addColumn('action', function($contact) {
-                return '<a href="#" class="btn btn-info btn-xs"> <i class="glyphicon glyphicon-eye-open"></i> Show </a> ' .
+                return '<a onClick="showForm ('. $contact->id .')" class="btn btn-info btn-xs"> <i class="glyphicon glyphicon-eye-open"></i> Show </a> ' .
                         '<a onClick="editForm ('. $contact->id .')" class="btn btn-primary btn-xs"> <i class="glyphicon glyphicon-edit"></i> Edit </a> ' .
                         '<a onClick="deleteData ('. $contact->id .')" class="btn btn-danger btn-xs"> <i class="glyphicon glyphicon-trash"></i> Delete </a>';
             })
+            // ->addColumn('provinsi', function($contact){
+            //     if ($contact->provinsi == null){
+            //         return 'null';
+            //     }
+            //     return $contact->provinsi;
+            // })
+            // ->addColumn('kota', function($contact){
+            //     if ($contact->kota == null){
+            //         return 'null';
+            //     }
+            //     return $contact->kota;
+            // })
+            // ->addColumn('kecamatan', function($contact){
+            //     if ($contact->kecamatan == null){
+            //         return 'null';
+            //     }
+            //     return $contact->kecamatan;
+            // })
             ->rawColumns(['show_photo', 'action'])
             ->make(true);
     }

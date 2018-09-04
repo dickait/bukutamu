@@ -1,245 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{ asset('assets/bootstrap/laravel-1.png') }}">
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Larajax</title>
+        <title>Buku Tamu</title>
+        <link rel="icon" href="{{ asset('assets/profile/images/favicon.ico') }}" type="image/x-icon">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-    {{-- dataTables --}}
-    <link href="{{ asset('assets/datatables/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Styles -->
+        <style>
+            html, body {
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 100;
+                height: 100vh;
+                margin: 0;
+            }
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="{{ asset('assets/bootstrap/css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+            .full-height {
+                height: 100vh;
+            }
 
-    <!-- Custom styles for this template -->
-    <link href="{{ asset('assets/bootstrap/css/navbar-fixed-top.css') }}" rel="stylesheet">
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
 
-    <link href="{{ asset('assets/sweetalert/sweetalert2.min.css') }}" rel="stylesheet">
+            .position-ref {
+                position: relative;
+            }
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="{{ asset('assets/bootstrap/js/ie-emulation-modes-warning.js') }}"></script>
+            .top-right {
+                position: absolute;
+                right: 10px;
+                top: 18px;
+            }
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+            .content {
+                text-align: center;
+            }
 
-  <body>
+            .title {
+                font-size: 84px;
+            }
 
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Laravel Ajax</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="/">Fixed top <span class="sr-only">(current)</span></a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+            .links > a {
+                color: #636b6f;
+                padding: 0 25px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-xs-12">
-                <div class="panel panel-default ">
-                    <div class="panel-heading">
-                        <h4> Contact List
-                            <span onClick="addForm()" class="btn btn-primary pull-right" style="margin-top:-8px;">Add Contact</span>
-                            <span onClick="eximForm()" class="btn btn-default pull-right" style="margin-top:-8px;">Import/Export</span>  
-                        </h4>
-                    </div>
-                    <div class="panel-body ">
-                        <table class="table table-striped col-xs-12" id="contact-table">
-                            <thead>
-                                <tr>
-                                    <th width="30">No</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Photo</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+            .m-b-md {
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="flex-center position-ref full-height">
+            @if (Route::has('login'))
+                <div class="top-right links">
+                    @auth
+                        <a href="{{ url('/data') }}">Home</a>
+                    @else
+                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('register') }}">Register</a>
+                    @endauth
+                </div>
+            @endif
+
+            <div class="content">
+                <div class="title m-b-md">
+                    Buku Tamu
+                </div>
+
+                <div class="links">
+                    <a href="https://laravel.com/docs">Documentation</a>
+                    <a href="https://laracasts.com">Laracasts</a>
+                    <a href="https://laravel-news.com">News</a>
+                    <a href="https://forge.laravel.com">Forge</a>
+                    <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
         </div>
-        @include('form')
-    </div> <!-- /container -->
-
-    
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ asset('assets/jquery/jquery-1.12.4.min.js') }}"></script>
-    <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
-
-    {{-- dataTables --}}
-    <script src="{{ asset('assets/dataTables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/dataTables/js/dataTables.bootstrap.min.js') }}"></script>
-
-    {{-- Validator --}}
-    <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{{ asset('assets/bootstrap/js/ie10-viewport-bug-workaround.js') }}"></script>
-
-    {{--  sweetalert  --}}
-    <script src="{{ asset('assets/sweetalert/sweetalert2.min.js') }}"></script>
-    
-    <script type="text/javascript">
-        $('#contact-table').DataTable({
-            
-            serverSide: true,
-            ajax: "{{ route('api.contact') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data: 'show_photo', name: 'show_photo'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
-
-        function addForm() {
-            save_method = "add";
-            $('input[name=_method]').val('POST');
-            $('#modal-form').modal('show');
-            $('#modal-form form')[0].reset();
-            $('.modal-title').text('Add Contact');
-        }
-
-        function editForm(id){
-            save_method = 'edit';
-            $('input[name=_method').val('PATCH');
-            $('#modal-form form')[0].reset();
-            $.ajax({
-                url: "{{ url('contact') }}" + '/' + id + "/edit",
-                type: "GET",
-                dataType: "JSON",
-                success: function(data){
-                    $('#modal-form').modal('show');
-                    $('.modal-title').text('Edit Contact');
-
-                    $('#id').val(data.id);
-                    $('#name').val(data.name);
-                    $('#email').val(data.email);
-                },
-                error: function(){
-                    alert("Nothing data");
-                }
-            });
-        }
-
-        function deleteData(id){
-            var csrf_token = $('meta[name="csrf-token"]').attr('content');
-            swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#d33',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
-                $.ajax({
-                    url: "{{ url('contact') }}" + '/' + id,
-                    type: "POST",
-                    data: {'_method' : 'DELETE', '_token' : csrf_token },
-                    success: function(){
-                        $('#contact-table').DataTable().ajax.reload();
-                        swal({
-                            title: 'Success!',
-                            text: 'Data has been deleted',
-                            type: 'success',
-                            timer: '2000'
-                        })
-                    },
-                    error: function(){
-                        swal({
-                            title: 'Error!',
-                            text: 'Something error!',
-                            type: 'error',
-                            timer: '2000'
-                        })
-                    }
-                });
-            });
-        }
-
-        $(function() {
-            $('#modal-form form').validator().on('submit', function (e){
-                if(!e.isDefaultPrevented()){
-                    var id = $('#id').val();
-                    if (save_method == 'add') url = "{{ url('contact') }}";
-                    else url = "{{ url('contact') . '/' }}" + id;
-
-                    $.ajax({
-                        url: url,
-                        type: "POST",
-                        // data: $("#modal-form form").serialize(),
-                        data: new FormData($("#modal-form form")[0]),
-                        contentType: false,
-                        processData: false,
-                        success: function(data) {
-                            $("#modal-form").modal('hide');
-                            $('#contact-table').DataTable().ajax.reload();
-                            
-                        },
-                        error: function(){
-                            alert('Something Error!');
-                            
-                        }
-                    });
-                    return false;
-                }
-            });
-        });
-
-        function eximForm(){
-            $('#modal-exim').modal('show');
-            $('#modal-exim form')[0].reset();
-        }
-    </script>
-  </body>
+    </body>
 </html>
